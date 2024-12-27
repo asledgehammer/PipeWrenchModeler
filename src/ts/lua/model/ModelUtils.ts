@@ -23,7 +23,7 @@ export const ILLEGAL_NAMES = [
  * @returns The sanitized name.
  */
 export const sanitizeName = (name: string): string => {
-  if (ILLEGAL_NAMES.indexOf(name.toLowerCase()) !== -1) return `_${name}_`;
+  if (ILLEGAL_NAMES.indexOf((name || '').toLowerCase()) !== -1) return `_${name}_`;
   return name;
 };
 

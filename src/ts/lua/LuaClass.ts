@@ -52,6 +52,10 @@ export class LuaClass extends LuaContainer {
     const { name } = this;
     let documentation: string;
 
+    if (!this.name) {
+      return ``
+    }
+
     const model = library.getClassModel(this as any);
     documentation = this.generateDocumentation(prefix, model);
 
@@ -134,6 +138,9 @@ export class LuaClass extends LuaContainer {
   generateAPI(prefix: string): string {
     const { library } = this.file;
     let { name } = this;
+    if (!name) {
+      return `// Wrong: class name is undefined`
+    }
 
     // Render the class documentation. (If present)
     const model = library.getClassModel(this as any);
@@ -147,6 +154,9 @@ export class LuaClass extends LuaContainer {
 
   generateLuaInterface(prefix: string = '', requireFrom: string = ''): string {
     const { name } = this;
+    if (!name) {
+      return `-- Wrong: class name is undefined`
+    }
     const requireStatement = requireFrom ? `require('${requireFrom}');` : ''
     return `${prefix}Exports.${sanitizeName(name)} = loadstring("${requireStatement}return _G['${name}']")()\n`;
   }
