@@ -30,6 +30,14 @@ export let start = function () {
   luaLibrary.scan();
   luaLibrary.parse();
 
+  // temporary solution: ignore Page3.ChooseModsWindow lua class
+  Object.entries(luaLibrary.classes).forEach(([key, cls]) => {
+    if (!cls.name) {
+      console.log('Error: ', cls.file.file);
+      delete luaLibrary.classes[key]
+    }
+  })
+
   // Loading all entries
   const classes: any[] = Object.values(luaLibrary.classes);
   const tables: any[] = Object.values(luaLibrary.tables);
